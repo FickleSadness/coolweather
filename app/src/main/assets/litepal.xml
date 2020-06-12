@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<litepal>
+    <dbname value="cool_weather" /> <!--库名称-->
+    <version value="1" />  <!--库版本，可升级-->
+    <!--这里是添加表名-->
+    <list>
+        <mapping class="com.example.coolweather.db.Province" />
+        <mapping class="com.example.coolweather.db.City" />
+        <mapping class="com.example.coolweather.db.County" />
+    </list>
+
+</litepal>
