@@ -6,43 +6,62 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
     tools:context=".WeatherActivity">
-
+    <!--背景-->
     <ImageView
         android:id="@+id/bing_pic_img"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
-
-    <!--可以看到，首先最外层布局使用了一个FrameLayout，并将它的背景色设置成colorPrimary。
-    然后在FrameLayout中嵌套了一个ScrollView，这是因为天气界面中的内容比较多，
-    使用ScrollView可以允许我们通过滚动的方式查看屏幕以外的内容。
-    由于ScrollView的内部只允许存在一个直接子布局，因此这里又嵌套了一个垂直方向的LinearLayout，
-    然后在LinearLayout中将刚才定义的所有布局逐个引入。-->
-    <ScrollView
-        android:id="@+id/weather_layout"
+    <!--滑动菜单功能
+    DrawerLayout中的第一个子控件用于作为主屏幕中显示的内容，第二个子控件用于作为滑动菜单中显示的内容，
+    因此这里我们在第二个子控件的位置添加了用于遍历省市县数据的碎片。-->
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:scrollbars="none">
-
-        <LinearLayout
+        android:layout_height="match_parent">
+        <!--下拉刷新-->
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+            <!--可以看到，首先最外层布局使用了一个FrameLayout，并将它的背景色设置成colorPrimary。
+            然后在FrameLayout中嵌套了一个ScrollView，这是因为天气界面中的内容比较多，
+            使用ScrollView可以允许我们通过滚动的方式查看屏幕以外的内容。
+            由于ScrollView的内部只允许存在一个直接子布局，因此这里又嵌套了一个垂直方向的LinearLayout，
+            然后在LinearLayout中将刚才定义的所有布局逐个引入。-->
+            <ScrollView
+                android:id="@+id/weather_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none">
 
-            <include layout="@layout/title" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true"
+                    android:orientation="vertical">
 
-            <include layout="@layout/now" />
+                    <include layout="@layout/title" />
 
-            <include layout="@layout/forecast" />
+                    <include layout="@layout/now" />
 
-            <include layout="@layout/aqi" />
+                    <include layout="@layout/forecast" />
 
-            <include layout="@layout/suggestion" />
+                    <include layout="@layout/aqi" />
 
-        </LinearLayout>
+                    <include layout="@layout/suggestion" />
 
-    </ScrollView>
+                </LinearLayout>
+            </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <!--添加了用于遍历省市县数据的碎片-->
+        <fragment
+            android:id="@+id/choose_area_fragment"
+            android:name="com.example.coolweather.ChooseAreaFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="start" />
+    </androidx.drawerlayout.widget.DrawerLayout>
 
 </FrameLayout>

@@ -71,7 +71,7 @@ public class Utility {
      *
      * @param response 数据
      * @param cityId   记录当前市所属市的id值。
-     * @return
+     * @return true
      */
     public static boolean handleCountyResponse(String response, int cityId) {
         if (!TextUtils.isEmpty(response)) {
