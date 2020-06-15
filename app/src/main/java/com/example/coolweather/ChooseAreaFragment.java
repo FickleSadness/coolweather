@@ -1,6 +1,7 @@
 package com.example.coolweather;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,8 +81,8 @@ public class ChooseAreaFragment extends Fragment {
     /**
      * 在onCreateView()方法中先是获取到了一些控件的实例,然后去初始化了ArrayAdapter,并将它设置为ListView的适配器。
      *
-     * @param inflater *
-     * @param container *
+     * @param inflater           *
+     * @param container          *
      * @param savedInstanceState *
      * @return
      */
@@ -97,6 +98,7 @@ public class ChooseAreaFragment extends Fragment {
 
     /**
      * 接着在onActivityCreated()方法中给ListView和Button设置了点击事件，到这里我们的初始化工作就算是完成了。
+     *
      * @param savedInstanceState *
      */
     @Override
@@ -114,6 +116,11 @@ public class ChooseAreaFragment extends Fragment {
                 } else if (currentLevel == LEVEL_CITY) {
                     selectedCity = cityList.get(position);
                     queryCounties();
+                } else if (currentLevel == LEVEL_COUNTY) {
+                    String weatherId = countyList.get(position).getWeatherId();
+                    Intent intent = new Intent(getActivity(), WeatherActivity.class);
+                    intent.putExtra("weather_id", weatherId);
+                    startActivity(intent);
                 }
             }
         });
@@ -191,7 +198,7 @@ public class ChooseAreaFragment extends Fragment {
                 dataList.add(county.getCountyName());
             }
             adapter.notifyDataSetChanged();
-                listView.setSelection(0);
+            listView.setSelection(0);
             currentLevel = LEVEL_COUNTY;
         } else {
             int provinceCode = selectedProvince.getProvinceCode();
